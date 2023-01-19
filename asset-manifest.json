@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/A-Typical-Page-HM-8/static/css/main.86159582.css",
+    "main.js": "/A-Typical-Page-HM-8/static/js/main.497eceff.js",
+    "index.html": "/A-Typical-Page-HM-8/index.html",
+    "main.86159582.css.map": "/A-Typical-Page-HM-8/static/css/main.86159582.css.map",
+    "main.497eceff.js.map": "/A-Typical-Page-HM-8/static/js/main.497eceff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86159582.css",
+    "static/js/main.497eceff.js"
+  ]
+}
