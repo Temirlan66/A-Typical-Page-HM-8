@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Login from "./components/Login/Login";
+import MainHeader from "./components/MainHeader/MainHeader";
+import Timer from "./components/timer/Timer";
+import Users from "./components/users/Users";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPostsVisible, setPostsVisible] = useState(false);
+  const [showTimer, setShowTimer] = useState(false)
+
+  useEffect(() => {
+    const resultLogal = localStorage.getItem("AUTH");
+    setIsLoggedIn(!!resultLogal);
+
+    return () => {
+      localStorage.removeItem("AUTH");
+    };
+  }, []);
+
+  const loginHandler = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem("AUTH", JSON.stringify(true));
+  };
+
+  const logoutHandler = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("AUTH");
+  };
+  
+  const showTimerHandler = () =>{
+    setShowTimer(true)
+    setPostsVisible(false)
+  }
+  const visiblePosts = () => {
+    setPostsVisible(true);
+    setShowTimer(false)
+  };
+  const loginedState  = isLoggedIn && !showTimer && !isPostsVisible
+  const timerState = isLoggedIn && showTimer
+  const postsState = isLoggedIn && isPostsVisible
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <MainHeader showTimerHandler={showTimerHandler} visiblePosts={visiblePosts} isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <main>
+        {!isLoggedIn && <Login onLogin={loginHandler}/>}
+        {loginedState && <Users onPosts={visiblePosts}/>}
+        {postsState && <Users onPosts={visiblePosts}/>}
+        {timerState && <Timer/>}
+      </main>
+    </React.Fragment>
   );
 }
 
